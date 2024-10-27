@@ -140,7 +140,6 @@ function UpcomingTours() {
   } = useTotalTours({ isDate: false });
   if (isLoadingTours) return <Spinner />;
   const today = new Date();
-  console.log(tours);
   const upcomingTours = (tours as TourData[])
     .filter((tour) => new Date(tour.startDate) > today)
     .sort(

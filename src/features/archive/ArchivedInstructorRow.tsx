@@ -103,7 +103,6 @@ function ArchivedInstructorRow({ instructor, index }) {
     });
   }
   const description = instructor.bioText.split(".").at(0).split("-").at(1);
-  console.log(description);
   return (
     <Row>
       <Number>{index}</Number>

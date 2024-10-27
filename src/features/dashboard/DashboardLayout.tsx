@@ -24,9 +24,7 @@ function DashboardLayout() {
     isPending: isLoadingTours,
     numDays,
   } = useTotalTours({ isDate: true });
-  console.log(tours);
   const { averageRating, isGettingRating } = useAverageRating();
-  console.log(participants);
 
   if (isLoading || isLoadingTours || isGettingRating) return <Spinner />;
   return (

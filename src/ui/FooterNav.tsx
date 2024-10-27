@@ -44,11 +44,10 @@ function FooterNav() {
   const { user } = useUser();
   if (!user) return;
   const { fullName } = user.user_metadata;
-
   const signiture = fullName
-    .split(" ")
-    .map((word: string) => word[0])
-    .join("");
+    ?.split(" ")
+    ?.map((word: string) => word[0])
+    ?.join("");
 
   return (
     <FooterSection $isShrink={isShrink}>

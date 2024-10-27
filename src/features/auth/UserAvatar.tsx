@@ -26,7 +26,6 @@ function UserAvatar() {
   const { isShrink } = useShrink();
   const { user } = useUser();
   const { fullName, avatar } = user.user_metadata;
-  console.log(user);
 
   return (
     <StyledUserAvatar>

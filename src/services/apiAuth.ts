@@ -53,14 +53,12 @@ export async function login({
     password,
   });
   if (error) throw new Error("Не удалось войти. Проверьте данные");
-  console.log(data);
   return data;
 }
 export async function getCurrentUser() {
   const { data: session } = await supabase.auth.getSession();
   if (!session.session) return null;
   const { data, error } = await supabase.auth.getUser();
-  console.log(data);
   if (error) throw new Error("Не удалось войти. Проверьте данные");
   return data?.user;
 }
@@ -97,21 +95,17 @@ export async function updateCurrentUser({
     throw new Error("Нет данных для обновления");
   }
 
-  // Обновляем данные пользователя через Supabase
   const { data, error } = await supabase.auth.updateUser(updateData);
   if (error) throw new Error("Не удалось обновить настройки профиля");
 
-  // Если нет аватара, возвращаем результат
   if (!avatar) return data;
 
-  // Работа с аватаром
   const fileName = `avatar-${data.user.id}-${Math.random()}`;
   const { error: storageError } = await supabase.storage
     .from("avatars")
     .upload(fileName, avatar);
   if (storageError) throw new Error("Не удалось обновить аватар");
 
-  // Обновляем информацию об аватаре
   const { data: updatedUser, error: error2 } = await supabase.auth.updateUser({
     data: {
       avatar: `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`,
@@ -119,6 +113,5 @@ export async function updateCurrentUser({
   });
   if (error2) throw new Error("Не удалось обновить настройки профиля");
 
-  console.log(updatedUser);
   return updatedUser;
 }

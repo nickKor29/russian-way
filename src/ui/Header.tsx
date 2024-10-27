@@ -25,7 +25,6 @@ const StyledHeader = styled.header`
 `;
 function Header() {
   const { isShrink, toggleSidebar } = useShrink();
-  console.log(isShrink);
   return (
     <StyledHeader>
       <ButtonIcon onClick={toggleSidebar}>

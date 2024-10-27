@@ -27,7 +27,6 @@ export async function getTotalTours({
     throw new Error("Не удалось загрузить туры: " + error.message);
   }
 
-  console.log(data);
   return data;
 }
 
@@ -46,34 +45,26 @@ export async function getTours({
   sortBy: { field: string; direction: string };
   total?: boolean;
 }) {
-  console.log(option, optionValue, page, filter);
-  console.log(total);
-  console.log(sortBy);
-
   let query = supabase.from("tours").select("*", { count: "exact" });
 
   if (option && optionValue) {
     query = query.eq(option, optionValue);
-    console.log(1);
   }
 
   if (filter && filter.value) {
     query = query.eq(filter.field, filter.value);
-    console.log(2);
   }
 
   if (sortBy) {
     query = query.order(sortBy.field, {
       ascending: sortBy.direction === "asc",
     });
-    console.log(3);
   }
 
   if (page && !total) {
     const from = (page - 1) * PAGE_SIZE_TOURS;
     const to = from + PAGE_SIZE_TOURS - 1;
     query = query.range(from, to);
-    console.log(4);
   }
 
   // Выполняем запрос
@@ -83,8 +74,6 @@ export async function getTours({
     console.error("Ошибка загрузки туров:", error.message);
     throw new Error("Не удалось загрузить туры");
   }
-
-  console.log(data);
 
   return { data, count };
 }
@@ -107,8 +96,6 @@ export async function createEditTour({
   tour: TourData;
   id?: number;
 }) {
-  console.log(tour);
-  console.log(id);
   const imagesFiles: { index: number; img: File | string }[] = tour.images
     .map((img, i) => {
       return {
@@ -126,7 +113,6 @@ export async function createEditTour({
       index: image.index,
     };
   });
-  console.log(imagesNames);
 
   const imagesPaths = imagesFiles.length
     ? imagesNames.map((img) => {
@@ -145,9 +131,6 @@ export async function createEditTour({
     });
   }
 
-  console.log(imagesPaths);
-  console.log(tour.images);
-
   let query;
 
   if (id) {
@@ -156,13 +139,12 @@ export async function createEditTour({
     const tourData = tour.discount === "" ? { ...tour, discount: null } : tour;
     query = supabase.from("tours").insert([tourData]);
   }
-  console.log(tour);
+
   const { data, error } = await query.select().single();
   if (error) {
     console.error("Ошибка создания/обновления тура:", error.message);
     throw new Error("Не получилось создать или обновить тур");
   }
-  console.log(data);
 
   if (imagesFiles.length) {
     try {

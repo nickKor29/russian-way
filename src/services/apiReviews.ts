@@ -10,11 +10,7 @@ export async function getReviews({
   sortBy: { field: string; direction: string };
   page: number;
 }) {
-  console.log(filter);
-  console.log(sortBy);
-  console.log(page);
   let query = supabase.from("reviews").select("*", { count: "exact" });
-  console.log(filter);
   if (filter) query = query.eq(filter.field, filter.value);
   if (sortBy)
     query = query.order(sortBy.field, {
@@ -61,7 +57,6 @@ export async function changeStatus(
   id: number | undefined,
   dataObj: { status: string; rejectionReason?: string }
 ) {
-  console.log(dataObj);
   const { data, error } = await supabase
     .from("reviews")
     .update(dataObj)
@@ -82,7 +77,6 @@ export async function getAverageRating(id?: number) {
   if (error) throw new Error("Не удалось получить средний рейтинг");
   const averageRating =
     data.reduce((acc, cur) => acc + cur.rating, 0) / data.length;
-  console.log(averageRating);
   if (id) {
     return { averageRating, quantity: data.length };
   }

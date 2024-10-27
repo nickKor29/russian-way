@@ -13,7 +13,7 @@ function UpdateUserDataForm() {
       email = "",
       user_metadata: { fullName: currentFullName } = {},
     } = {},
-  } = useUser(); // Безопасная деструктуризация
+  } = useUser();
 
   const { updateUser, isUpdating } = useUpdateUser();
 

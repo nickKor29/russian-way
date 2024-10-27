@@ -31,23 +31,16 @@ function Stats({
     (allCurrentParticipants / allMaxParticipants) *
     100
   ).toFixed(1);
-  console.log(allCurrentParticipants);
-  console.log(allMaxParticipants);
-  console.log(averageToursLoad);
-  // 2.
+
   const totalSales = tours.reduce((acc, cur) => {
     return (
       acc +
       (cur.regularPrice - (cur.discount as number)) * cur.currentParticipants
     );
   }, 0);
-
-  // 3.
-  console.log(participants);
-  const filteredParticipants = participants.filter(
-    (participant) => participant.toursIds.length > 1
-  ).length;
-  console.log(filteredParticipants);
+  const filteredParticipants = participants.filter((participant) => {
+    return participant.toursIds.length > 1;
+  }).length;
 
   const percentageRepeatParticipants = (
     (filteredParticipants / participants.length) *

@@ -77,12 +77,11 @@ export async function getInstructors({
   option,
   value,
 }: InstructorsSearch): Promise<InstructorFull[]> {
-  console.log(option, value);
   let query = supabase.from("instructors").select("*");
   if (option) query = query.eq(option, value);
 
   const { data, error } = await query;
-
+  console.log(data);
   if (error) throw new Error("Не удалось получить инструкторов");
   console.log(data);
   return data;
